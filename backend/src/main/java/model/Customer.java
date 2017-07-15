@@ -1,14 +1,10 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -36,26 +32,25 @@ public class Customer implements Serializable {
 	@NotNull
 	private String phone;
 	
-	//@OneToOne
+	@ManyToOne
 	private Subscription subscription;
 	
 	@OneToMany
-	private Set<Billing> bilings;
+	private Set<Billing> billings;
+
+	private Date lastBillingDate;
 
 	public Customer() {
 		super();
 	}
 
-	public Customer(String firstName, String lastName, String email, String password, String phone,
-			Subscription subscription, Set<Billing> bilings) {
+	public Customer(String firstName, String lastName, String email, String password, String phone) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
 		this.phone = phone;
-		this.subscription = subscription;
-		this.bilings = bilings;
 	}
 
 	public Long getId() {
@@ -114,13 +109,19 @@ public class Customer implements Serializable {
 		this.subscription = subscription;
 	}
 
-	public Set<Billing> getBilings() {
-		return bilings;
+	public Set<Billing> getBillings() {
+		return billings;
 	}
 
-	public void setBilings(Set<Billing> bilings) {
-		this.bilings = bilings;
-	}	
-	
+	public void setBillings(Set<Billing> billings) {
+		this.billings = billings;
+	}
 
+	public Date getLastBillingDate() {
+		return lastBillingDate;
+	}
+
+	public void setLastBillingDate(Date lastBillingDate) {
+		this.lastBillingDate = lastBillingDate;
+	}
 }

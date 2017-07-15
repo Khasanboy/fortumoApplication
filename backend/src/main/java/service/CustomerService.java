@@ -10,7 +10,7 @@ public interface CustomerService {
 	
 	public Customer getCustomer(Long id);
 	
-	public void addCustomer(Customer admin);
+	public Customer addCustomer(Customer admin);
 	
 	public void deleteCustomer(Long id);
 	

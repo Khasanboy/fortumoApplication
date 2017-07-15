@@ -25,19 +25,15 @@ public class Billing implements Serializable{
 	Date paidDate;
 	
 	@NotNull
-	Date endDate;
-	
-	@NotNull
 	private BigDecimal total;
 
 	public Billing() {
 		super();
 	}
 
-	public Billing(Date paidDate, Date endDate, BigDecimal total) {
+	public Billing(Date paidDate, BigDecimal total) {
 		super();
 		this.paidDate = paidDate;
-		this.endDate = endDate;
 		this.total = total;
 	}
 
@@ -55,14 +51,6 @@ public class Billing implements Serializable{
 
 	public void setPaidDate(Date paidDate) {
 		this.paidDate = paidDate;
-	}
-
-	public Date getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
 	}
 
 	public BigDecimal getTotal() {

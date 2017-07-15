@@ -2,12 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -29,15 +24,18 @@ public class Subscription implements Serializable{
     @NotNull
     private String serviceProvider;
 
+    @OneToOne
+	private Customer customer;
+
 	public Subscription() {
 		super();
 	}
 
-	public Subscription(String name, BigDecimal price, String serviceProvider) {
-		super();
+	public Subscription(String name, BigDecimal price, String serviceProvider, Customer customer) {
 		this.name = name;
 		this.price = price;
 		this.serviceProvider = serviceProvider;
+		this.customer = customer;
 	}
 
 	public Long getId() {
@@ -71,6 +69,13 @@ public class Subscription implements Serializable{
 	public void setServiceProvider(String serviceProvider) {
 		this.serviceProvider = serviceProvider;
 	}
-		
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 
 }
