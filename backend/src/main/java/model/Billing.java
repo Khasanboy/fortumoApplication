@@ -2,7 +2,6 @@ package model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.Period;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -26,7 +25,7 @@ public class Billing implements Serializable{
 	Date paidDate;
 	
 	@NotNull
-	Period period;
+	Date endDate;
 	
 	@NotNull
 	private BigDecimal total;
@@ -35,10 +34,10 @@ public class Billing implements Serializable{
 		super();
 	}
 
-	public Billing(Date paidDate, Period period, BigDecimal total) {
+	public Billing(Date paidDate, Date endDate, BigDecimal total) {
 		super();
 		this.paidDate = paidDate;
-		this.period = period;
+		this.endDate = endDate;
 		this.total = total;
 	}
 
@@ -58,12 +57,12 @@ public class Billing implements Serializable{
 		this.paidDate = paidDate;
 	}
 
-	public Period getPeriod() {
-		return period;
+	public Date getEndDate() {
+		return endDate;
 	}
 
-	public void setPeriod(Period period) {
-		this.period = period;
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 	public BigDecimal getTotal() {
