@@ -1,0 +1,24 @@
+#navBar{
+  background-color: #f0f3f6;
+  height: 7%;
+  width: 100%;
+  border-style: solid;
+  border-width: thin;
+  border-color: lightgrey;
+  justify-content: flex-end;
+}
+
+#language{
+  height: 100%;
+  width: 20%;
+  text-align: center;
+  color: #189c00;
+  border-left: solid;
+  border-width: thin;
+  border-color: lightgrey;
+  float:right;
+}
+
+#lan{
+  margin-top: 12%;
+}

@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+html {
+  height: 100%;
+  width: 100%;
+}
+body {
+  background-color: white;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.text{
+  font-size: 2vh;
+}
+
+.bigText{
+  font-size: 3.3vh;
+}
+
+a:any-link{
+    color:#189c00;
+    text-decoration: none;
+
+}

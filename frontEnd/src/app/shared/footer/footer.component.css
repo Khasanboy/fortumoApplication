@@ -1,0 +1,25 @@
+#footer{
+  background-color: #f0f3f6;
+  height: 15%;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.footer-row{
+  display: flex;
+  flex-direction: row;
+  font-size: 15px;
+}
+
+#help-support{
+  margin-left: 5%;
+  margin-top: 5%;
+  height: 100%;
+  color: grey;
+}
+
+#service-provider{
+  float:left;
+  height: 100%;
+  margin-top: 5%;
+}
