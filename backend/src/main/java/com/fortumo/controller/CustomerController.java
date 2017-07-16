@@ -35,7 +35,7 @@ public class CustomerController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/register")
     public ResponseEntity<Customer> registerCustomer(@RequestBody Customer customer) {
-    	System.out.println("came");
+    	
     	Customer customerNew;
     	if(customerService.findOneByEmail(customer.getEmail())==null && customerService.findOneByPhone(customer.getPhone())==null){
     		
@@ -57,6 +57,29 @@ public class CustomerController {
     	}
        
     }
+    
+    @RequestMapping(method = RequestMethod.POST, value = "/login{email:.+}")
+    public ResponseEntity<Customer> loginCustomer(@RequestParam String email, @RequestParam String password) {
+
+    	Customer customer = customerService.findOneByEmail(email);
+    	System.out.println(email);
+    	System.out.println(password);
+ 
+    	if(customer == null){
+    		
+    		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    	}
+    	else if( customer.getPassword().equals(password)){
+    		
+    		 return new ResponseEntity<>(customer, HttpStatus.OK);
+    	}
+    	else{
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    	}
+       
+    }
+    
+    
 
     @RequestMapping(method = RequestMethod.POST, value = "/subscribe")
     public ResponseEntity<Billing> subscribe(@RequestParam Long id, @RequestParam String subscriptionName) {
