@@ -9,11 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.annotation.*;
-import repository.BillingRepository;
-import repository.CustomerRepository;
-import repository.SubscriptionRepository;
 import service.BillingService;
 import service.CustomerService;
 import service.SubscriptionService;
@@ -21,7 +17,7 @@ import service.SubscriptionService;
 import java.util.Date;
 
 @RestController
-@RequestMapping("/api/Customer")
+@RequestMapping("/api")
 public class CustomerController {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -37,9 +33,9 @@ public class CustomerController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/register")
     public ResponseEntity<Customer> registerCustomer(Customer customer) {
-
+    	Customer customerNew;
         try {
-            Customer customerNew = customerService.addCustomer(customer);
+             customerNew = customerService.addCustomer(customer);
         } catch (DataIntegrityViolationException e) {
             if (log.isDebugEnabled())
                 log.debug(e.getMessage());
@@ -48,7 +44,7 @@ public class CustomerController {
 
         }
 
-        return new ResponseEntity<>(customer, HttpStatus.CREATED);
+        return new ResponseEntity<>(customerNew, HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/subscribe")
@@ -70,7 +66,7 @@ public class CustomerController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/unsubscribe")
-    public ResponseEntity unSubscribe(@RequestParam Long id, @RequestParam String subscriptionName) {
+    public ResponseEntity<Object> unSubscribe(@RequestParam Long id, @RequestParam String subscriptionName) {
         Customer customer = customerService.getCustomer(id);
         Subscription subscription = subscriptionService.findByName(subscriptionName);
         if (customer == null) {
@@ -81,7 +77,7 @@ public class CustomerController {
         }
         customer.setSubscription(null);
         customerService.updateCustomer(customer);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

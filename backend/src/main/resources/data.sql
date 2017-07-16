@@ -1,0 +1,1 @@
+insert into subscription (id, name, price, provider) values (1,'Premium account for €2.99/month', 2.99, 'GO Server') ;

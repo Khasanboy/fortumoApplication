@@ -18,24 +18,21 @@ public class Subscription implements Serializable{
 	@Column(unique = true)
 	private String name;
 	
+	@Column
     @NotNull
 	private BigDecimal price;
     
     @NotNull
-    private String serviceProvider;
-
-    @OneToOne
-	private Customer customer;
+    private String provider;
 
 	public Subscription() {
 		super();
 	}
 
-	public Subscription(String name, BigDecimal price, String serviceProvider, Customer customer) {
+	public Subscription(String name, BigDecimal price, String provider) {
 		this.name = name;
 		this.price = price;
-		this.serviceProvider = serviceProvider;
-		this.customer = customer;
+		this.provider = provider;
 	}
 
 	public Long getId() {
@@ -62,20 +59,12 @@ public class Subscription implements Serializable{
 		this.price = price;
 	}
 
-	public String getServiceProvider() {
-		return serviceProvider;
+	public String getProvider() {
+		return provider;
 	}
 
-	public void setServiceProvider(String serviceProvider) {
-		this.serviceProvider = serviceProvider;
-	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setProvider(String provider) {
+		this.provider = provider;
 	}
 
 }
