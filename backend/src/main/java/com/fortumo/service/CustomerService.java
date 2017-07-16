@@ -1,8 +1,8 @@
-package service;
+package com.fortumo.service;
 
 import java.util.List;
 
-import model.Customer;
+import com.fortumo.model.Customer;
 
 public interface CustomerService {
 	
@@ -16,6 +16,9 @@ public interface CustomerService {
 	
 	public void updateCustomer(Customer admin);
 	
-	public Customer findOneByUsername(String username);
+	public Customer findOneByEmail(String email);
+	
+	public Customer findOneByPhone(String phone);
+	
 
 }

@@ -1,4 +1,4 @@
-package common;
+package com.fortumo.common;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -10,10 +10,10 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import controller.CustomerController;
-import model.Billing;
-import model.Customer;
-import service.CustomerService;
+import com.fortumo.controller.CustomerController;
+import com.fortumo.model.Billing;
+import com.fortumo.model.Customer;
+import com.fortumo.service.CustomerService;
 
 public class QuartzJob implements Job {
 

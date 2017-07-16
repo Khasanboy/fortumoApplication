@@ -1,13 +1,15 @@
-package serviceimpl;
+package com.fortumo.serviceimpl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import model.Customer;
-import repository.CustomerRepository;
-import service.CustomerService;
+import com.fortumo.model.Customer;
+import com.fortumo.repository.CustomerRepository;
+import com.fortumo.service.CustomerService;
 
+@Service
 public class CustomerServiceImpl implements CustomerService {
 	
 	@Autowired CustomerRepository customerRepository;
@@ -41,8 +43,15 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer findOneByUsername(String username) {
-		return customerRepository.findOneByUsername(username);
+	public Customer findOneByEmail(String email) {
+		return customerRepository.findOneByEmail(email);
 	}
+
+	@Override
+	public Customer findOneByPhone(String phone) {
+		return customerRepository.findOneByPhone(phone);
+	}
+	
+	
 
 }

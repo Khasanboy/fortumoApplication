@@ -1,4 +1,4 @@
-package application;
+package com.fortumo;
 
 import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
@@ -11,15 +11,16 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import common.QuartzJob;
+import org.springframework.context.annotation.ComponentScan;
+
+import com.fortumo.common.QuartzJob;
 
 @SpringBootApplication
-@EntityScan(basePackages = {"model"})
 public class BackendApplication {
 
 	public static void main(String[] args) throws SchedulerException {
 		SpringApplication.run(BackendApplication.class, args);
-		
+		/*
 		JobDetail job = JobBuilder.newJob(QuartzJob.class).build();
 		
 		Trigger trigger = TriggerBuilder.newTrigger()
@@ -31,5 +32,6 @@ public class BackendApplication {
 		Scheduler sc = StdSchedulerFactory.getDefaultScheduler();
 		sc.start();
 		sc.scheduleJob(job, trigger);
+		*/
 	}
 }

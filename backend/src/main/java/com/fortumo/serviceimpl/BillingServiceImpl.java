@@ -1,12 +1,15 @@
-package serviceimpl;
+package com.fortumo.serviceimpl;
 
-import model.Billing;
 import org.springframework.beans.factory.annotation.Autowired;
-import repository.BillingRepository;
-import service.BillingService;
+import org.springframework.stereotype.Service;
+
+import com.fortumo.model.Billing;
+import com.fortumo.repository.BillingRepository;
+import com.fortumo.service.BillingService;
 
 import java.util.List;
 
+@Service
 public class BillingServiceImpl implements BillingService {
 
     @Autowired

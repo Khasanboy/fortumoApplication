@@ -1,9 +1,8 @@
-package service;
-
-import model.Billing;
-import model.Billing;
+package com.fortumo.service;
 
 import java.util.List;
+
+import com.fortumo.model.Billing;
 
 public interface BillingService {
     public List<Billing> getAllBillings();
@@ -15,4 +14,5 @@ public interface BillingService {
     public void deleteBilling(Long id);
 
     public void updateBilling(Billing billing);
+    
 }

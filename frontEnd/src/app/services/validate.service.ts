@@ -6,7 +6,7 @@ export class ValidateService {
   constructor() { }
 
   validateRegister(user){
-    if(user.name == undefined || user.surname == undefined || user.phone == undefined || user.email == undefined || user.password == undefined){
+    if(user.firstName == undefined || user.lastName == undefined || user.phone == undefined || user.email == undefined || user.password == undefined){
       return false;
     }
     else{
@@ -16,7 +16,8 @@ export class ValidateService {
 
   validateEmail(email){
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
+    const pattern = new RegExp(re)
+    return pattern.test(email);
   }
 
 

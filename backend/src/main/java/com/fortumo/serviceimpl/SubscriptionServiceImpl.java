@@ -1,12 +1,15 @@
-package serviceimpl;
+package com.fortumo.serviceimpl;
 
-import model.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
-import repository.SubscriptionRepository;
-import service.SubscriptionService;
+import org.springframework.stereotype.Service;
+
+import com.fortumo.model.Subscription;
+import com.fortumo.repository.SubscriptionRepository;
+import com.fortumo.service.SubscriptionService;
 
 import java.util.List;
 
+@Service
 public class SubscriptionServiceImpl implements SubscriptionService{
 
     @Autowired

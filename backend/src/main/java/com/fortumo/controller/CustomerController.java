@@ -1,8 +1,5 @@
-package controller;
+package com.fortumo.controller;
 
-import model.Billing;
-import model.Customer;
-import model.Subscription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +7,18 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.BillingService;
-import service.CustomerService;
-import service.SubscriptionService;
+
+import com.fortumo.model.Billing;
+import com.fortumo.model.Customer;
+import com.fortumo.model.Subscription;
+import com.fortumo.service.BillingService;
+import com.fortumo.service.CustomerService;
+import com.fortumo.service.SubscriptionService;
 
 import java.util.Date;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api")
 public class CustomerController {
 
@@ -32,19 +34,28 @@ public class CustomerController {
     BillingService billingService;
 
     @RequestMapping(method = RequestMethod.POST, value = "/register")
-    public ResponseEntity<Customer> registerCustomer(Customer customer) {
+    public ResponseEntity<Customer> registerCustomer(@RequestBody Customer customer) {
+    	System.out.println("came");
     	Customer customerNew;
-        try {
-             customerNew = customerService.addCustomer(customer);
-        } catch (DataIntegrityViolationException e) {
-            if (log.isDebugEnabled())
-                log.debug(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+    	if(customerService.findOneByEmail(customer.getEmail())==null && customerService.findOneByPhone(customer.getPhone())==null){
+    		
+    		 try {
+                 customerNew = customerService.addCustomer(customer);
+            } catch (DataIntegrityViolationException e) {
+                if (log.isDebugEnabled())
+                    log.debug(e.getMessage());
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
 
 
-        }
+            }
 
-        return new ResponseEntity<>(customerNew, HttpStatus.CREATED);
+            return new ResponseEntity<>(customerNew, HttpStatus.CREATED);
+    		
+    	}
+    	else{
+    		return new ResponseEntity<>(HttpStatus.CONFLICT);
+    	}
+       
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/subscribe")

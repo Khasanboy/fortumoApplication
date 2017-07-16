@@ -1,4 +1,4 @@
-package model;
+package com.fortumo.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 @Entity
 @Table(name="customer")
@@ -32,12 +33,15 @@ public class Customer implements Serializable {
 	@NotNull
 	private String phone;
 	
+	@Null
 	@ManyToOne
 	private Subscription subscription;
 	
+	@Null
 	@OneToMany
 	private Set<Billing> billings;
-
+	
+	@Null
 	private Date lastBillingDate;
 
 	public Customer() {

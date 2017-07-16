@@ -1,8 +1,8 @@
-package service;
-
-import model.Subscription;
+package com.fortumo.service;
 
 import java.util.List;
+
+import com.fortumo.model.Subscription;
 
 public interface SubscriptionService {
 
