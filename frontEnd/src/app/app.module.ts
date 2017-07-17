@@ -13,12 +13,15 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import {ValidateService} from './services/validate.service';
 import {AuthService} from './services/auth.service';
+import { ProfileComponent } from './components/profile/profile.component';
+import { PaymenttableComponent } from './shared/paymenttable/paymenttable.component';
 
 
 const appRoutes : Routes = [
   {path:'', component:LoginComponent},
   {path:'register', component:RegisterComponent},
-  {path:'subscription', component:SubscriptionComponent}
+  {path:'subscription', component:SubscriptionComponent},
+  {path:'profile', component:ProfileComponent}
 ]
 
 @NgModule({
@@ -28,7 +31,9 @@ const appRoutes : Routes = [
     SubscriptionComponent,
     LoginComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    ProfileComponent,
+    PaymenttableComponent
   ],
   
   imports: [

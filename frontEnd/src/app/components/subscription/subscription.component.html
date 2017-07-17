@@ -1,3 +1,30 @@
-<p>
-  subscription works!
-</p>
+<div class="flex-col">
+
+  <div class="login-form">
+    <form (submit)="onSubmit()" class="form-signin">
+
+      <div class="form-group">
+        <label for="serviceType">Service Type</label>
+        <select class="form-control" id="serviceType" [(ngModel)]="serviceType" name="serviceType" placeholder="Service Type" required autofocus>
+            <option>Premium account for €2.99/month</option>
+          </select>
+      </div>
+
+      <div class="form-group">
+        <label for="serviceProvider">Service Provider</label>
+        <select class="form-control" id="serviceProvider" [(ngModel)]="serviceProvider" name="serviceProvider" placeholder="Service provider" required autofocus>
+            <option>Go Server</option>
+          </select>
+      </div>
+
+      <div id="form-btn" class="flex-row">
+        <div id="submit-btn">
+          <input type="submit" class="btn btn-success" value="Subscribe">
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+
+</div>

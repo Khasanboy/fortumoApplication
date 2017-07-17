@@ -1,8 +1,9 @@
 package com.fortumo.common;
 
 import java.time.Duration;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.quartz.Job;
@@ -25,21 +26,22 @@ public class QuartzJob implements Job {
 
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
-
-		List<Customer> customers = new ArrayList<>();
-
-		customers = customerService.getAllCustomers();
-		if (!customers.isEmpty() && customers.size() > 0) {
+		
+		if(customerService.getAllCustomers() != null){
+			List<Customer> customers =  customerService.getAllCustomers();
 			for (Customer customer : customers) {
 				if (customer.getSubscription() != null) {
 					Duration duration = Duration.between(new Date().toInstant(),
 							customer.getLastBillingDate().toInstant());
 					if (!duration.minusDays(30).isNegative()) {
-						Billing billing = new Billing(new Date(), customer.getSubscription().getPrice());
+						Calendar c = new GregorianCalendar();
+						c.add(Calendar.DATE, 30);
+						Date date = c.getTime();
+						Billing billing = new Billing(new Date(), date, customer.getSubscription().getPrice(), customer);
 						customer.getBillings().add(billing);
 						customer.setLastBillingDate(billing.getPaidDate());
 						customerService.updateCustomer(customer);
-						///here should send data to send SMS
+						 ///here should send data to send SMS
 					}
 				}
 			}

@@ -1,0 +1,2 @@
+insert into subscription (id, name, price, provider) values (1,'Premium account for €2.99/month', 2.99, 'GO Server');
+insert into customer (id, first_name, last_name, email, password, phone) values (1,'john', 'doe', 'doe@gmail.com', '123', '123')

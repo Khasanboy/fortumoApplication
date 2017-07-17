@@ -15,103 +15,114 @@ import com.fortumo.service.BillingService;
 import com.fortumo.service.CustomerService;
 import com.fortumo.service.SubscriptionService;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api")
 public class CustomerController {
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
-    CustomerService customerService;
+	@Autowired
+	CustomerService customerService;
 
-    @Autowired
-    SubscriptionService subscriptionService;
+	@Autowired
+	SubscriptionService subscriptionService;
 
-    @Autowired
-    BillingService billingService;
+	@Autowired
+	BillingService billingService;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/register")
-    public ResponseEntity<Customer> registerCustomer(@RequestBody Customer customer) {
-    	
-    	Customer customerNew;
-    	if(customerService.findOneByEmail(customer.getEmail())==null && customerService.findOneByPhone(customer.getPhone())==null){
-    		
-    		 try {
-                 customerNew = customerService.addCustomer(customer);
-            } catch (DataIntegrityViolationException e) {
-                if (log.isDebugEnabled())
-                    log.debug(e.getMessage());
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
+	@RequestMapping(method = RequestMethod.POST, value = "/register")
+	public ResponseEntity<Customer> registerCustomer(@RequestBody Customer customer) {
 
+		Customer customerNew;
+		if (customerService.findOneByEmail(customer.getEmail()) == null
+				&& customerService.findOneByPhone(customer.getPhone()) == null) {
 
-            }
+			try {
+				customerNew = customerService.addCustomer(customer);
+			} catch (DataIntegrityViolationException e) {
+				if (log.isDebugEnabled())
+					log.debug(e.getMessage());
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
 
-            return new ResponseEntity<>(customerNew, HttpStatus.CREATED);
-    		
-    	}
-    	else{
-    		return new ResponseEntity<>(HttpStatus.CONFLICT);
-    	}
-       
-    }
-    
-    @RequestMapping(method = RequestMethod.POST, value = "/login{email:.+}")
-    public ResponseEntity<Customer> loginCustomer(@RequestParam String email, @RequestParam String password) {
+			}
 
-    	Customer customer = customerService.findOneByEmail(email);
-    	System.out.println(email);
-    	System.out.println(password);
- 
-    	if(customer == null){
-    		
-    		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    	}
-    	else if( customer.getPassword().equals(password)){
-    		
-    		 return new ResponseEntity<>(customer, HttpStatus.OK);
-    	}
-    	else{
-    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    	}
-       
-    }
-    
-    
+			return new ResponseEntity<>(customerNew, HttpStatus.CREATED);
 
-    @RequestMapping(method = RequestMethod.POST, value = "/subscribe")
-    public ResponseEntity<Billing> subscribe(@RequestParam Long id, @RequestParam String subscriptionName) {
-        Customer customer = customerService.getCustomer(id);
-        Subscription subscription = subscriptionService.findByName(subscriptionName);
-        if (customer == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        if (subscription == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-            customer.setSubscription(subscription);
-            Billing billing = new Billing(new Date(), subscription.getPrice());
-            customer.getBillings().add(billing);
-            customer.setLastBillingDate(billing.getPaidDate());
-            customerService.updateCustomer(customer);
-            return new ResponseEntity<Billing>(billing, HttpStatus.OK);
-    }
+		} else {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
 
-    @RequestMapping(method = RequestMethod.POST, value = "/unsubscribe")
-    public ResponseEntity<Object> unSubscribe(@RequestParam Long id, @RequestParam String subscriptionName) {
-        Customer customer = customerService.getCustomer(id);
-        Subscription subscription = subscriptionService.findByName(subscriptionName);
-        if (customer == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        if (subscription == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        customer.setSubscription(null);
-        customerService.updateCustomer(customer);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/login")
+	public ResponseEntity<Customer> loginCustomer(@RequestBody Map<String, String> requestBody) {
+
+		String phone = requestBody.get("phone");
+		String password = requestBody.get("password");
+
+		Customer customer = customerService.findOneByPhone(phone);
+
+		if (customer == null) {
+
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} else if (customer.getPassword().equals(password)) {
+
+			return new ResponseEntity<>(customer, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/subscribe")
+	public ResponseEntity<Customer> subscribe(@RequestBody Map<String, String> requestBody) {
+		Long id = new Long(requestBody.get("id"));
+		String subscriptionName = requestBody.get("subscriptionName");
+
+		Customer customer = customerService.getCustomer(id);
+		Subscription subscription = subscriptionService.findByName(subscriptionName);
+		if (customer == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} else if (subscription == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		} else {
+			customer.setSubscription(subscription);
+			Calendar c = new GregorianCalendar();
+			c.add(Calendar.DATE, 30);
+			Date date = c.getTime();
+			Billing billing = new Billing(new Date(), date, subscription.getPrice(), customer);
+			customer.getBillings().add(billing);
+			customer.setLastBillingDate(new Date());
+			customerService.updateCustomer(customer);
+			return new ResponseEntity<>(customer, HttpStatus.OK);
+		}
+
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/unsubscribe")
+	public ResponseEntity<Customer> unSubscribe(@RequestBody Map<String, String> requestBody) {
+		Long id = new Long(requestBody.get("id"));
+		String subscriptionName = requestBody.get("subscriptionName");
+
+		Customer customer = customerService.getCustomer(id);
+		Subscription subscription = subscriptionService.findByName(subscriptionName);
+		if (customer == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}else if (subscription == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		else{
+			customer.setSubscription(null);
+			customerService.updateCustomer(customer);
+			return new ResponseEntity<>(customer,HttpStatus.OK);
+		}
+		
+	}
 
 }

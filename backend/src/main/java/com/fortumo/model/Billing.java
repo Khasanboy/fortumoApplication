@@ -8,8 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="billing")
@@ -22,19 +26,29 @@ public class Billing implements Serializable{
 	private Long id;
 	
 	@NotNull
-	Date paidDate;
+	private Date paidDate;
+	
+	@NotNull
+	private Date endDate;
 	
 	@NotNull
 	private BigDecimal total;
+	
+	@ManyToOne
+	@JsonBackReference
+	@JoinColumn(name="customerId")
+	private Customer customer;
 
 	public Billing() {
 		super();
 	}
 
-	public Billing(Date paidDate, BigDecimal total) {
+	public Billing(Date paidDate, Date endDate, BigDecimal total, Customer customer) {
 		super();
 		this.paidDate = paidDate;
+		this.endDate = endDate;
 		this.total = total;
+		this.customer = customer;
 	}
 
 	public Long getId() {
@@ -53,6 +67,14 @@ public class Billing implements Serializable{
 		this.paidDate = paidDate;
 	}
 
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
 	public BigDecimal getTotal() {
 		return total;
 	}
@@ -60,6 +82,15 @@ public class Billing implements Serializable{
 	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 	
+		
 
 }

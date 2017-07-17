@@ -6,7 +6,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="customer")
@@ -33,15 +34,13 @@ public class Customer implements Serializable {
 	@NotNull
 	private String phone;
 	
-	@Null
 	@ManyToOne
 	private Subscription subscription;
 	
-	@Null
-	@OneToMany
+	@JsonManagedReference
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Billing> billings;
 	
-	@Null
 	private Date lastBillingDate;
 
 	public Customer() {

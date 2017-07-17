@@ -20,6 +20,15 @@ export class ValidateService {
     return pattern.test(email);
   }
 
+  validateSubscription(serviceName, serviceProvider){
+    if(serviceName == undefined || serviceProvider == undefined){
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
 
 
 }

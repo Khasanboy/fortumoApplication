@@ -1,0 +1,77 @@
+#status{
+  width: 100%;
+  height: 34%;
+  padding: 2%;
+}
+#status-detail{
+  border-top: solid;
+  border-bottom: solid;
+  border-width: thin;
+  border-color: grey;
+  color: black;
+}
+.detail{
+  padding: 1%;
+}
+#history{
+  width: 100%;
+  height: 40%;
+  padding: 2%;
+  overflow-y: scroll;
+  overflow-x: hidden; 
+}
+#table-title{
+  width: 100%;
+  height: 13%;
+  border-top: solid;
+  border-bottom: solid;
+  border-width: thin;
+  border-color: grey;
+  justify-content: space-between;
+  color: black;
+}
+#table-content{
+  width: 100%;
+  height: 87%;
+  color: black;
+  overflow-y: scroll;
+}
+.table-row{
+  border-bottom: solid;
+  border-width: thin;
+  border-color: grey;
+  justify-content: space-between;
+  text-align: center;
+}
+.table-title{
+  text-align: center;
+  font-weight: bold;
+}
+
+#subscription{
+  width: 100%;
+  height: 20%;
+  padding: 2%;
+}
+
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    width: 90%;
+    padding: 2% 10%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: bolder;
+}
+.button:hover{
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.bolder{
+  font-weight: bold
+
+}
