@@ -1,4 +1,4 @@
-# fortumoApplication
+# simple crud Application
 
 This folder contains two applications one is backend and one is front end
 Bakend application is created in spring boot
